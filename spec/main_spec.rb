@@ -23,4 +23,21 @@ RSpec.describe Enumerable do
       expect { array.my_each }.not_to raise_error(ArgumentError)
     end
   end
+
+  describe '#my_each_with_index' do
+    it 'should return Enumerator if block is not given' do
+      expect(array.my_each_with_index).to be_a(Enumerator)
+    end
+
+    it 'should work as #each_with_index method if block given' do
+      # rubocop:disable Layout/LineLength
+      expect(array.my_each_with_index { |ele, index| puts "#{ele} : #{index}" }).to eq(array.each_with_index { |ele, index| puts "#{ele} : #{index}" })
+      # rubocop:enable Layout/LineLength
+    end
+
+    it 'should take 0 arguments' do
+      expect { array.my_each_with_index('argument') }.to raise_error(ArgumentError)
+      expect { array.my_each_with_index }.not_to raise_error(ArgumentError)
+    end
+  end
 end
