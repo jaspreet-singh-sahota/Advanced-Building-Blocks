@@ -49,7 +49,7 @@ module Enumerable
       my_each { |ele| return false unless ele }
     end
     true
-end
+  end
 
   def my_any?(arg = nil, &prc)
     return true if !block_given? && arg.nil? && my_each { |ele| return true if ele == true } && empty? == false
