@@ -207,4 +207,30 @@ RSpec.describe Enumerable do
     end
   end
 
+   describe '#my_inject' do
+    it "should not use the built-in Array#map" do
+      expect(array).to_not receive(:my_inject)
+    end
+
+    # rubocop:disable Layout/LineLength
+    it 'should combine each element of the collection by applying the symbol when a symbol is specified' do
+      expect(array.my_inject('+')).to eq(15)
+    end
+
+    it 'should combine each element of the collection by applying the, symbol when a symbol is specified' do
+        expect((5..10).my_inject(2, :*)).to eq(302_400)
+    end
+    # rubocop:enable Layout/LineLength
+
+    it 'when block given should return the result of the block' do
+      expect((5..10).my_inject(4) { |prod, n| prod * n }).to eq(604_800)
+    end
+  end
+
+  describe 'multiply_els' do
+    it 'should multiply all the elements of the array together by using #my_inject method' do
+      expect(multiply_els([2, 4, 5])).to eql(40)
+    end
+  end
+
 end
