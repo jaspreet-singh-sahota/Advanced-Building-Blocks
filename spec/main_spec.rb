@@ -136,4 +136,34 @@ RSpec.describe Enumerable do
     end
   end
 
+  describe '#my_none?' do
+    it "should not use the built-in Array#none?" do
+      expect(array).to_not receive(:none?)
+    end
+
+    it 'should return true if none of the element members is true' do
+      expect(array.my_none?).not_to eq(true)
+    end
+
+    it 'should return true if none of the element is a member of such class' do
+      expect(array.my_none?(String)).to eq(true)
+    end
+
+    it 'should return true only if none of the element matches the Regex' do
+      expect(array.my_none?(2)).not_to eq(true)
+    end
+
+    it 'should return true only if none of the element matches the pattern' do
+      expect(array.my_none?(4)).not_to eq(true)
+    end
+
+    it 'should return true if none elements matches the block condition' do
+      expect(arr_regex.my_none? { |ele| ele.length >= 3 }).to eq(false)
+    end
+
+    it 'should return true if empty array is given' do
+      expect(arr_empty.my_none?).to eq(true)
+    end
+  end
+
 end
