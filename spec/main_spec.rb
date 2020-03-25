@@ -184,4 +184,27 @@ RSpec.describe Enumerable do
     end
   end
 
+  describe "#my_map" do
+    it "should accept an array and a block as args" do
+      expect { my_map([1,2,3]) { |n| 2 * n } }.to_not raise_error(ArgumentError)
+    end
+
+    it 'should return to Enumerator if block is not given' do
+      expect(array.my_each).to be_a(Enumerator)
+    end
+
+    it 'if block given should return new array matching the conditions' do
+      expect(array.my_map { |elem| elem + 3 }).to eq([4, 5, 6, 7, 8])
+    end
+
+    it 'should execute the proc when both a proc and a block are given' do
+      my_proc = proc { |num| num > 2 }
+      expect(array.my_map(my_proc) { |num| num > 2 }).to eq([false, false, true, true, true])
+    end
+
+    it "should not use the built-in Array#map" do
+      expect(array).to_not receive(:map)
+    end
+  end
+
 end
