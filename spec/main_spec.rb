@@ -166,4 +166,22 @@ RSpec.describe Enumerable do
     end
   end
 
+  describe '#count' do
+    it "should not use the built-in Array#none?" do
+      expect(array).to_not receive(:count)
+    end
+
+    it 'should return the number of items in element through enumeration' do
+      expect(array.my_count).to eq(5)
+    end
+
+    it 'should count the number of items in element that are equal to item' do
+      expect(arr_count.my_count(1)).to eq(3)
+    end
+
+    it 'should return number of elements that matches the condition' do
+      expect(array.my_count(&:odd?)).to eq(3)
+    end
+  end
+
 end
