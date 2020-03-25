@@ -3,6 +3,7 @@ AllCops:
     - "README.md"
     - "Guardfile"
     - "Rakefile"
+    - "Gemfile"
 
   DisplayCopNames: true
 
@@ -17,6 +18,7 @@ Metrics/ClassLength:
 Metrics/BlockLength:
   ExcludedMethods: ['describe']
   Max: 30
+
 
 
 Style/Documentation:
@@ -39,3 +41,5 @@ Layout/ExtraSpacing:
 Layout/MultilineMethodCallIndentation:
   Enabled: true
   EnforcedStyle: indented
+Lint/UselessAssignment:
+  Enabled: false
