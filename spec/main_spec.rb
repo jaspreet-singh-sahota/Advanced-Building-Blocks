@@ -40,4 +40,32 @@ RSpec.describe Enumerable do
       expect { array.my_each_with_index }.not_to raise_error(ArgumentError)
     end
   end
+
+  describe '#my_select' do
+    let(:arr_even) { [1, 2, 3, 8] }
+    let(:arr_odd) { [6, 11, 13] }
+    let(:odd) { [11, 13] }
+    let(:array) { [3, 5, 'A', 'B'] }
+
+    it 'should return Enumerator if block is not given' do
+      expect(arr_even.my_select).to be_a(Enumerator)
+    end
+
+    it 'when Array given should return an Array' do
+      expect(arr_even.my_select(&:even?)).to be_an(Array)
+    end
+
+    it 'when Array given should return an Array with selected elements' do
+      expect(arr_odd.my_select(&:odd?)).to eq(odd)
+    end
+
+    it 'should return empty Array if no elements matches' do
+      expect(array.my_select { |ele| ele == 'x' }).to eq([])
+    end
+
+    it 'should take 0 argumets' do
+      expect { array.my_select('argument') }.to raise_error(ArgumentError)
+      expect { array.my_select }.not_to raise_error(ArgumentError)
+    end
+  end
 end
