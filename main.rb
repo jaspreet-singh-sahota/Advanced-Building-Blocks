@@ -1,4 +1,4 @@
-module Enumerable 
+module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
 
@@ -59,7 +59,7 @@ module Enumerable
     false
   end
 
-   def my_none?(arg = nil, &prc)
+  def my_none?(arg = nil, &prc)
     !my_any?(arg, &prc)
   end
 
@@ -73,20 +73,19 @@ module Enumerable
 
   def my_map(&prc)
     return enum_for(:map) unless block_given?
-    
+
     mapped = []
     my_each { |ele| mapped << prc.call(ele) }
     mapped
   end
 
   def my_inject
-    acc = shift 
-    item_removed = acc 
+    acc = shift
+    item_removed = acc
     my_each { |num| acc = yield(acc, num) }
     unshift(item_removed)
     acc
   end
-
 end
 
 def multiply_els
