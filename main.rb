@@ -89,7 +89,7 @@ module Enumerable
     acc
   end
 end
-# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
 def multiply_els
   my_inject { |acc, curr| acc *= curr }
