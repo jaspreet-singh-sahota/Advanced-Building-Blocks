@@ -33,6 +33,8 @@ module Enumerable
     selected
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
   def my_all?(arg = nil, &prc)
     return true if !block_given? && arg.nil? && include?(nil) == false && include?(false) == false
     return false unless block_given? || !arg.nil?
@@ -87,7 +89,10 @@ module Enumerable
     acc
   end
 end
+# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
 def multiply_els
   my_inject { |acc, curr| acc *= curr }
 end
+
+puts multiply_els([2, 4, 5]) # => 40
