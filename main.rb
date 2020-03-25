@@ -35,18 +35,18 @@ module Enumerable
 
   # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
-  def my_all?(arg = nil)
+  def my_all?(arg = nil, &prc)
     return true if !block_given? && arg.nil? && include?(nil) == false && include?(false) == false
     return false unless block_given? || !arg.nil?
 
     if block_given?
-      my_each { |ele| return false unless yield(ele) }
-    elsif !arg.nil?
-      if arg.is_a?(Regexp)
-        my_each { |ele| return false unless arg != ele.to_s }
-      end
+      my_each { |ele| return false if prc.call(ele) == false }
+    elsif arg.class == Regexp
+      my_each { |ele| return false if arg.match(ele).nil? }
+    elsif arg.class <= Numeric || arg.class <= String
+      my_each { |ele| return false if ele != arg }
     else
-      my_each { |ele| return false unless ele }
+      my_each { |ele| return false if (ele.is_a? arg) == false }
     end
     true
   end
@@ -67,8 +67,8 @@ module Enumerable
     false
   end
 
-  def my_none?(arg = nil)
-    !my_any?(arg)
+  def my_none?(arg = nil, &prc)
+    !my_any?(arg, &prc)
   end
 
   def my_count(arg = nil, &prc)
