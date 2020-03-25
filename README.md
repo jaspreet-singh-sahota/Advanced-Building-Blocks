@@ -1,6 +1,6 @@
 # Enumerable methods
  
--  project is completed by Oscar Alfredo Gómez Elizarrarás, in partial requirements of the Microverse cirriculum and Odin project specifications by the following:
+-  project is completed by Jaspreet singh, in partial requirements of the Microverse cirriculum and Odin project specifications by the following:
 
 - Create #my_each, a method that is identical to #each but (obviously) does not use #each. You’ll need to remember the yield statement. Make sure it returns the same thing as #each as well.
 - Create #my_each_with_index in the same way.
@@ -40,12 +40,6 @@
 - Github: [@jaspreet-singh-sahota](https://github.com/jaspreet-singh-sahota)
 - Twitter: [@jaspree88033250]https://twitter.com/jaspree88033250
 - Linkedin: [jaspreet Singh]https://www.linkedin.com/in/jaspreet-singh-a28286146/
-
-## 🤝 Contributing
-
-Contributions, issues and feature requests are welcome!
-
-Feel free to check the [issues page](issues/).
 
 ## Show your support
 
