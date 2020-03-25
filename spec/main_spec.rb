@@ -81,6 +81,10 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_all?' do
+    it "should not use the built-in Array#none?" do
+      expect(array).to_not receive(:all?)
+    end
+
     it 'returns true if at least one of the element is not false or nil' do
       expect(arr_nil.my_any?(1)).to eq(true)
     end
@@ -101,4 +105,35 @@ RSpec.describe Enumerable do
       expect(arr_empty.my_all?).to eq(true)
     end
   end
+
+  describe '#my_any?' do
+    it "should not use the built-in Array#none?" do
+      expect(array).to_not receive(:none?)
+    end
+
+    it 'should return true if at least one of the element is not false or nil' do
+      expect(arr_nil.my_any?(1)).to eq(true)
+    end
+
+    it 'should return true if at least one of the element is a member of such class' do
+      expect(arr_nil.my_any?(Integer)).to eq(true)
+    end
+
+    it 'should return false if none of the element matches the Regex' do
+      expect(arr_regex.my_any?(/z/)).not_to eq(true)
+    end
+
+    it 'should return false if none of the element matches the pattern' do
+      expect(array.my_any?(1)).to eq(true)
+    end
+
+    it 'should return true if any elements matches the block condition' do
+      expect(arr_regex.my_any? { |ele| ele.length >= 3 }).to eq(true)
+    end
+
+    it 'if empty array is given should return false' do
+      expect(arr_empty.my_any?).not_to eq(true)
+    end
+  end
+
 end
