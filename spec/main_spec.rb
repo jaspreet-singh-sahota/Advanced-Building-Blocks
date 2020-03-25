@@ -19,7 +19,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should work as #each method if block given' do
-      expect(arr.my_each { |ele| puts 'return: #{ele}' }).to eq(arr.each { |ele| puts 'return: #{ele}' })
+      expect(arr.my_each { |ele| puts "return: #{ele}" }).to eq(arr.each { |ele| puts "return: #{ele}" })
     end
 
     it 'should take 0 arguments' do
@@ -39,7 +39,7 @@ RSpec.describe Enumerable do
 
     it 'should work as #each_with_index method if block given' do
       # rubocop:disable Layout/LineLength
-      expect(arr.my_each_with_index { |ele, index| puts '#{ele} : #{index}' }).to eq(arr.each_with_index { |ele, index| puts '#{ele} : #{index}' })
+      expect(arr.my_each_with_index { |ele, index| puts "#{ele} : #{index}" }).to eq(arr.each_with_index { |ele, index| puts "#{ele} : #{index}" })
       # rubocop:enable Layout/LineLength
     end
 
@@ -212,7 +212,6 @@ RSpec.describe Enumerable do
       expect(arr).to_not receive(:my_inject)
     end
 
-    # rubocop:disable Layout/LineLength
     it 'should combine each element of the collection by applying the symbol when a symbol is specified' do
       expect(arr.my_inject('+')).to eq(15)
     end
@@ -220,7 +219,6 @@ RSpec.describe Enumerable do
     it 'should combine each element of the collection by applying the, symbol when a symbol is specified' do
       expect((5..10).my_inject(2, :*)).to eq(302_400)
     end
-    # rubocop:enable Layout/LineLength
 
     it 'when block given should return the result of the block' do
       expect((5..10).my_inject(4) { |prod, n| prod * n }).to eq(604_800)
