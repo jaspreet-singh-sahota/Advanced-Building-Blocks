@@ -35,8 +35,8 @@ module Enumerable
 
   # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
-    def my_all?(arg = nil)
-      return true if !block_given? && arg.nil? && include?(nil) == false && include?(false) == false
+  def my_all?(arg = nil)
+    return true if !block_given? && arg.nil? && include?(nil) == false && include?(false) == false
     return false unless block_given? || !arg.nil?
 
     if block_given?
@@ -49,9 +49,8 @@ module Enumerable
       my_each { |ele| return false unless ele }
     end
     true
-  end
+end
 
-  
   def my_any?(arg = nil, &prc)
     return true if !block_given? && arg.nil? && my_each { |ele| return true if ele == true } && empty? == false
     return false unless block_given? || !arg.nil?
@@ -84,13 +83,13 @@ module Enumerable
       end
     end
     count
-  end  
-  
+  end
+
   def my_map(prc = nil)
     return enum_for(:map) unless block_given?
 
     mapped = []
-    my_each { |ele| mapped << prc.call(ele) } if block_given? && prc      
+    my_each { |ele| mapped << prc.call(ele) } if block_given? && prc
     my_each { |ele| mapped << yield(ele) } if prc.nil?
     mapped
   end
