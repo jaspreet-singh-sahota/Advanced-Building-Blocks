@@ -1,7 +1,7 @@
 require './main.rb'
 
 RSpec.describe Enumerable do
-  let(:array) { [1, 2, 3, 4, 5] }
+  let(:arr) { [1, 2, 3, 4, 5] }
   let(:arr_regex) { %w[cat bat rat hello] }
   let(:arr_nil) { [1, nil, false] }
   let(:match_arr) { [1, 1, 1] }
@@ -10,66 +10,66 @@ RSpec.describe Enumerable do
 
   describe '#my_each' do
     it 'should return Enumerator if block is not given' do
-      expect(array.my_each).to be_a(Enumerator)
-      expect(array.my_each.to_a).to eq(array)
+      expect(arr.my_each).to be_a(Enumerator)
+      expect(arr.my_each.to_a).to eq(arr)
     end
 
-    it "should not use the built-in Array#each" do
-      expect(array).to_not receive(:each)
+    it 'should not use the built-in Array#each' do
+      expect(arr).to_not receive(:each)
     end
 
     it 'should work as #each method if block given' do
-      expect(array.my_each { |ele| puts "return: #{ele}" }).to eq(array.each { |ele| puts "return: #{ele}" })
+      expect(arr.my_each { |ele| puts 'return: #{ele}' }).to eq(arr.each { |ele| puts 'return: #{ele}' })
     end
 
     it 'should take 0 arguments' do
-      expect { array.my_each('argument') }.to raise_error(ArgumentError)
-      expect { array.my_each }.not_to raise_error(ArgumentError)
+      expect { arr.my_each('argument') }.to raise_error(ArgumentError)
+      expect { arr.my_each }.not_to raise_error(ArgumentError)
     end
   end
 
   describe '#my_each_with_index' do
     it 'should return Enumerator if block is not given' do
-      expect(array.my_each_with_index).to be_a(Enumerator)
+      expect(arr.my_each_with_index).to be_a(Enumerator)
     end
 
-    it "should not use the built-in Array#select" do
-      expect(array).to_not receive(:each_with_index)
+    it 'should not use the built-in Array#select' do
+      expect(arr).to_not receive(:each_with_index)
     end
 
     it 'should work as #each_with_index method if block given' do
       # rubocop:disable Layout/LineLength
-      expect(array.my_each_with_index { |ele, index| puts "#{ele} : #{index}" }).to eq(array.each_with_index { |ele, index| puts "#{ele} : #{index}" })
+      expect(arr.my_each_with_index { |ele, index| puts '#{ele} : #{index}' }).to eq(arr.each_with_index { |ele, index| puts '#{ele} : #{index}' })
       # rubocop:enable Layout/LineLength
     end
 
     it 'should take 0 arguments' do
-      expect { array.my_each_with_index('argument') }.to raise_error(ArgumentError)
-      expect { array.my_each_with_index }.not_to raise_error(ArgumentError)
+      expect { arr.my_each_with_index('argument') }.to raise_error(ArgumentError)
+      expect { arr.my_each_with_index }.not_to raise_error(ArgumentError)
     end
   end
 
   describe '#my_select' do
-    arr_even = [3, 2, 3, 4] 
-    arr_odd = [1, 5, 6, 11, 13] 
-    odd = [11, 13] 
-    array = [3, 5, 'A', 'B'] 
+    arr_even = [3, 2, 3, 4]
+    arr_odd = [1, 5, 6, 11, 13]
+    odd = [11, 13]
+    arr = [3, 5, 'A', 'B']
 
-    it "should not use the built-in Array#select" do
-      expect(array).to_not receive(:select)
+    it 'should not use the built-in Array#select' do
+      expect(arr).to_not receive(:select)
     end
 
     it 'should return Enumerator if block is not given' do
       expect(arr_even.my_select).to be_a(Enumerator)
     end
-    
+
     it 'should return empty Array if no elements matches' do
-      expect(array.my_select { |ele| ele == 'x' }).to eq([])
+      expect(arr.my_select { |ele| ele == 'x' }).to eq([])
     end
 
     it 'should take 0 argumets' do
-      expect { array.my_select('argument') }.to raise_error(ArgumentError)
-      expect { array.my_select }.not_to raise_error(ArgumentError)
+      expect { arr.my_select('argument') }.to raise_error(ArgumentError)
+      expect { arr.my_select }.not_to raise_error(ArgumentError)
     end
     it 'when Array given should return an Array' do
       expect(arr_even.my_select(&:even?)).to be_an(Array)
@@ -81,8 +81,8 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_all?' do
-    it "should not use the built-in Array#none?" do
-      expect(array).to_not receive(:all?)
+    it 'should not use the built-in Array#none?' do
+      expect(arr).to_not receive(:all?)
     end
 
     it 'returns true if at least one of the element is not false or nil' do
@@ -90,7 +90,7 @@ RSpec.describe Enumerable do
     end
 
     it 'returns true if all of the element is a member of such class' do
-      expect(array.my_all?(Integer)).to eq(true)
+      expect(arr.my_all?(Integer)).to eq(true)
     end
 
     it 'returns true if all of the element matches the pattern' do
@@ -101,14 +101,14 @@ RSpec.describe Enumerable do
       expect(arr_regex.my_all? { |ele| ele.length >= 3 }).to eq(true)
     end
 
-    it 'should return true if empty array is given' do
+    it 'should return true if empty arr is given' do
       expect(arr_empty.my_all?).to eq(true)
     end
   end
 
   describe '#my_any?' do
-    it "should not use the built-in Array#none?" do
-      expect(array).to_not receive(:none?)
+    it 'should not use the built-in Array#none?' do
+      expect(arr).to_not receive(:none?)
     end
 
     it 'should return true if at least one of the element is not false or nil' do
@@ -124,55 +124,55 @@ RSpec.describe Enumerable do
     end
 
     it 'should return false if none of the element matches the pattern' do
-      expect(array.my_any?(1)).to eq(true)
+      expect(arr.my_any?(1)).to eq(true)
     end
 
     it 'should return true if any elements matches the block condition' do
       expect(arr_regex.my_any? { |ele| ele.length >= 3 }).to eq(true)
     end
 
-    it 'if empty array is given should return false' do
+    it 'if empty arr is given should return false' do
       expect(arr_empty.my_any?).not_to eq(true)
     end
   end
 
   describe '#my_none?' do
-    it "should not use the built-in Array#none?" do
-      expect(array).to_not receive(:none?)
+    it 'should not use the built-in Array#none?' do
+      expect(arr).to_not receive(:none?)
     end
 
     it 'should return true if none of the element members is true' do
-      expect(array.my_none?).not_to eq(true)
+      expect(arr.my_none?).not_to eq(true)
     end
 
     it 'should return true if none of the element is a member of such class' do
-      expect(array.my_none?(String)).to eq(true)
+      expect(arr.my_none?(String)).to eq(true)
     end
 
     it 'should return true only if none of the element matches the Regex' do
-      expect(array.my_none?(2)).not_to eq(true)
+      expect(arr.my_none?(2)).not_to eq(true)
     end
 
     it 'should return true only if none of the element matches the pattern' do
-      expect(array.my_none?(4)).not_to eq(true)
+      expect(arr.my_none?(4)).not_to eq(true)
     end
 
     it 'should return true if none elements matches the block condition' do
       expect(arr_regex.my_none? { |ele| ele.length >= 3 }).to eq(false)
     end
 
-    it 'should return true if empty array is given' do
+    it 'should return true if empty arr is given' do
       expect(arr_empty.my_none?).to eq(true)
     end
   end
 
   describe '#count' do
-    it "should not use the built-in Array#none?" do
-      expect(array).to_not receive(:count)
+    it 'should not use the built-in Array#none?' do
+      expect(arr).to_not receive(:count)
     end
 
     it 'should return the number of items in element through enumeration' do
-      expect(array.my_count).to eq(5)
+      expect(arr.my_count).to eq(5)
     end
 
     it 'should count the number of items in element that are equal to item' do
@@ -180,45 +180,45 @@ RSpec.describe Enumerable do
     end
 
     it 'should return number of elements that matches the condition' do
-      expect(array.my_count(&:odd?)).to eq(3)
+      expect(arr.my_count(&:odd?)).to eq(3)
     end
   end
 
-  describe "#my_map" do
-    it "should accept an array and a block as args" do
-      expect { my_map([1,2,3]) { |n| 2 * n } }.to_not raise_error(ArgumentError)
+  describe '#my_map' do
+    it 'should accept an arr and a block as args' do
+      expect { my_map([1, 2, 3]) { |n| 2 * n } }.to_not raise_error(ArgumentError)
     end
 
     it 'should return to Enumerator if block is not given' do
-      expect(array.my_each).to be_a(Enumerator)
+      expect(arr.my_each).to be_a(Enumerator)
     end
 
-    it 'if block given should return new array matching the conditions' do
-      expect(array.my_map { |elem| elem + 3 }).to eq([4, 5, 6, 7, 8])
+    it 'if block given should return new arr matching the conditions' do
+      expect(arr.my_map { |elem| elem + 3 }).to eq([4, 5, 6, 7, 8])
     end
 
     it 'should execute the proc when both a proc and a block are given' do
       my_proc = proc { |num| num > 2 }
-      expect(array.my_map(my_proc) { |num| num > 2 }).to eq([false, false, true, true, true])
+      expect(arr.my_map(my_proc) { |num| num > 2 }).to eq([false, false, true, true, true])
     end
 
-    it "should not use the built-in Array#map" do
-      expect(array).to_not receive(:map)
+    it 'should not use the built-in Array#map' do
+      expect(arr).to_not receive(:map)
     end
   end
 
-   describe '#my_inject' do
-    it "should not use the built-in Array#map" do
-      expect(array).to_not receive(:my_inject)
+  describe '#my_inject' do
+    it 'should not use the built-in Array#map' do
+      expect(arr).to_not receive(:my_inject)
     end
 
     # rubocop:disable Layout/LineLength
     it 'should combine each element of the collection by applying the symbol when a symbol is specified' do
-      expect(array.my_inject('+')).to eq(15)
+      expect(arr.my_inject('+')).to eq(15)
     end
 
     it 'should combine each element of the collection by applying the, symbol when a symbol is specified' do
-        expect((5..10).my_inject(2, :*)).to eq(302_400)
+      expect((5..10).my_inject(2, :*)).to eq(302_400)
     end
     # rubocop:enable Layout/LineLength
 
@@ -228,9 +228,8 @@ RSpec.describe Enumerable do
   end
 
   describe 'multiply_els' do
-    it 'should multiply all the elements of the array together by using #my_inject method' do
+    it 'should multiply all the elements of the arr together by using #my_inject method' do
       expect(multiply_els([2, 4, 5])).to eql(40)
     end
   end
-
 end
